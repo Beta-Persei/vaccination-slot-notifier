@@ -17,9 +17,17 @@ class Session:
     vaccine: Vaccine
     slots: List[str]
 
-    def __init__(self, session_id: UUID, date: str, available_capacity: int, min_age_limit: int, vaccine: Vaccine, slots: List[str]):
+    def __init__(
+        self,
+        session_id: UUID,
+        date: str,
+        available_capacity: int,
+        min_age_limit: int,
+        vaccine: Vaccine,
+        slots: List[str],
+    ):
         self.session_id = session_id
-        self.date = datetime.strptime(date,'%d-%m-%Y')
+        self.date = datetime.strptime(date, "%d-%m-%Y")
         self.available_capacity = available_capacity
         self.min_age_limit = min_age_limit
         self.vaccine = vaccine
@@ -41,7 +49,6 @@ class Center:
     fee_type: str
     sessions: List[Session]
 
-    
     @classmethod
     def from_json(cls, json):
         obj = cls()
@@ -54,16 +61,17 @@ class Center:
         obj.pincode = json["pincode"]
         obj.lat = json["lat"]
         obj.long = json["long"]
-        obj.center_from = datetime.strptime(json["from"], '%H:%M:%S')
-        obj.to = datetime.strptime(json["to"], '%H:%M:%S')
+        obj.center_from = datetime.strptime(json["from"], "%H:%M:%S")
+        obj.to = datetime.strptime(json["to"], "%H:%M:%S")
         obj.fee_type = json["fee_type"]
         obj.sessions = [Session(**x) for x in json["sessions"]]
         return obj
 
+
 class State:
     state_id: int
     state_name: str
-    
+
     def __init__(self, state_id: UUID, state_name: str):
         self.state_id = state_id
         self.state_name = state_name
@@ -73,10 +81,11 @@ class State:
         obj = cls(json["state_id"], json["state_name"])
         return obj
 
+
 class District:
     district_id: int
     district_name: str
-    
+
     def __init__(self, district_id: UUID, district_name: str):
         self.district_id = district_id
         self.district_name = district_name

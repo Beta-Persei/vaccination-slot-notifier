@@ -15,6 +15,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'vaccination_slot_notifier.settings')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "vaccination_slot_notifier.settings")
 
 application = get_asgi_application()

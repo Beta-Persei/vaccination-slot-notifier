@@ -6,17 +6,68 @@
 
 {% block content %}
 
-<div id="rcorners" class="center">
+<div id="rcorners" class="form-field">
+    <label for="search-type-selector"> Search By : </label>
+
+    <div id="search-type-selector" name="search-type-selector" class="form-check form-check-inline">
+        <div>
+            <input id="search-type-pincode" type="radio" name="search-type" value="pincode"
+                class="form-check-input radio-inline" checked>
+            <label for="search-type-pincode" class="form-check-label radio-inline"> Pincode </label>
+        </div>
+        <span style="width: 10px;"></span>
+
+        <div>
+            <input id="search-type-district" type="radio" name="search-type" value="district"
+                class="form-check-input radio-inline">
+            <label for="search-type-district" class="form-check-label radio-inline"> District </label>
+
+        </div>
+
+
+
+    </div>
+
     <form method="post">
-        {% crispy form form.helper %}
+        {% csrf_token %}
+
+        <!-- {% crispy form %} -->
+        <div id="email-field" class="form-field">
+            <label>{{ form.email.label_tag }}</label>
+
+            {{ form.email.errors }}
+            {{ form.email }}
+        </div>
+
+        <div id="age_limit-field" class="form-field">
+            <label>{{ form.age_limit.label_tag }}</label>
+
+            {{ form.age_limit.errors }}
+            {{ form.age_limit }}
+        </div>
+
+        <div id="pincode-field" class="form-field">
+            <label>{{ form.pincode.label_tag }}</label>
+
+            {{ form.pincode.errors }}
+            {{ form.pincode }}
+        </div>
+
+        <div id="district-field" >
+            <div id="state-field" class="form-field">
+                <label>State</label>
+                <select id="state-select" class="custom-select"></select>
+            </div>
+
+            <div id="district-id-field" class="form-field">
+                <label>District</label>
+                <select id="district-select" class="custom-select" name="district_id"></select>
+            </div>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+
     </form>
 </div>
 
-<style>
-    #rcorners {
-        border-radius: 25px;
-        background-color: white;
-        padding: 20px;
-    }
-</style>
 {% endblock %}

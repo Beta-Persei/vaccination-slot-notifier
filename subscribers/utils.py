@@ -9,14 +9,17 @@ from django.conf import settings
 from vaccination_slot_notifier import celery_app
 from sniffer.api import get_centers_by_district_id, get_centers_by_pincode
 
+
 @celery_app.task
 def send_slot_mail(subscriber_email, message):
     subject = "Vaccination slot found!"
-    send_mail(subject, message, None, recipient_list=[subscriber_email], fail_silently=True)
+    send_mail(
+        subject, message, None, recipient_list=[subscriber_email], fail_silently=True
+    )
 
 
 def parse_centers(centers, age_limit):
-    message_text = ''
+    message_text = ""
     for center in centers:
         for session in center.sessions:
             if session.min_age_limit == age_limit and session.available_capacity > 0:
