@@ -1,0 +1,22 @@
+{% extends "subscribers/base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% load static %}
+
+{% block content %}
+
+<div id="rcorners" class="center">
+    <form method="post">
+        {% crispy form form.helper %}
+    </form>
+</div>
+
+<style>
+    #rcorners {
+        border-radius: 25px;
+        background-color: white;
+        padding: 20px;
+    }
+</style>
+{% endblock %}
