@@ -24,7 +24,8 @@ class SubscriberForm(ModelForm):
     
     def clean(self):
         cleaned_data = super().clean()
-        print(cleaned_data)
-        if (not cleaned_data.get('pincode') and not cleaned_data.get('district_id')) or (cleaned_data.get('pincode') and cleaned_data.get('district_id')):
+        if (not cleaned_data.get('pincode') and not cleaned_data.get('district_id')):
             raise ValidationError({'pincode': 'Please enter your pincode', 'district_id': 'Please select your district'})
+        if (cleaned_data.get('pincode') and cleaned_data.get('district_id')):
+            raise ValidationError('Enter either pincode or district')
         return cleaned_data

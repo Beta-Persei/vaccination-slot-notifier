@@ -10,9 +10,6 @@ from subscribers.models import Subscriber
 from subscribers.utils import check_and_notify_subscriber
 
 
-def test(request):
-    return render(request,"subscribers/index.html")
-
 class SubscriberCreateView(SuccessMessageMixin, FormView):
     form_class = SubscriberForm
     

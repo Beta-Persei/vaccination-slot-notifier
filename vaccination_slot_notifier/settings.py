@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-r#b@0ot9j!u&^51@3mtcd82)fol)satss@ur^^tx_^20b3_38u'
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", default=True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", []).split(" ")
 
 
 # Application definition
@@ -77,13 +78,17 @@ WSGI_APPLICATION = 'vaccination_slot_notifier.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": os.environ.get("SQL_ENGINE"),
+        "NAME": os.environ.get("SQL_DATABASE"),
+        "USER": os.environ.get("SQL_USER"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD"),
+        "HOST": os.environ.get("SQL_HOST", "localhost"),
+        "PORT": os.environ.get("SQL_PORT", "5432"),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
@@ -128,16 +133,19 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Templates
+CRISPY_TEMPLATE_PACK = "bootstrap4"
+
 # Email
 EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "abbasi.daniyal98@gmail.com"
-EMAIL_HOST_PASSWORD = "acggknyimcagayqq"
+EMAIL_HOST_USER = os.environ.get("EMAIL_ID")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASSWORD")
 
 # Celery
-CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
 
 # Custom Settings
 DISTRICT_SLOT_ENDPOINT = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict"
@@ -146,5 +154,8 @@ PINCODE_SLOT_ENDPOINT = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/p
 STATES_ENDPOINT = "https://cdn-api.co-vin.in/api/v2/admin/location/states"
 DISTRICTS_ENDPOINT = "https://cdn-api.co-vin.in/api/v2/admin/location/districts/%s"
 
-SNIFFING_INTERVAL_SECONDS = 5 * 60
-MAIL_COOLDOWN_SECONDS = 6 * 60 * 60
+SNIFFING_INTERVAL_SECONDS = int(os.environ.get("SNIFFING_INTERVAL_SECONDS"))
+MAIL_COOLDOWN_SECONDS = int(os.environ.get("MAIL_COOLDOWN_SECONDS"))
+
+
+SITE_HOST_DOMAIN = os.environ.get("DOMAIN")

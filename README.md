@@ -1,9 +1,9 @@
-Redis
+## Redis
 
-Celery worker
+## Celery worker
 
 celery -A vaccination_slot_notifier worker -l DEBUG
 
-Celery worker
+## Celery worker
 
 celery -A vaccination_slot_notifier beat -l DEBUG

@@ -27,8 +27,6 @@ def get_centers_by_pincode(pincode):
     }
     
     res = requests.get(settings.PINCODE_SLOT_ENDPOINT, params=query_params, headers=headers)
-    print(res.text)
-    
     return parse_centers(res.json()["centers"])
 
 def get_centers_by_district_id(district_id):
@@ -37,7 +35,6 @@ def get_centers_by_district_id(district_id):
         "date" : datetime.now().strftime("%d-%m-%Y"),
     }
     res = requests.get(settings.DISTRICT_SLOT_ENDPOINT, params=query_params, headers=headers)
-    print(res.text)
     return parse_centers(res.json()["centers"])
 
 def get_states():
