@@ -16,8 +16,9 @@ from vaccination_slot_notifier import celery_app
 twilio_client = Client(settings.TWILIO_ACCOUND_SID, settings.TWILIO_AUTH_TOKEN)
 
 
-def send_onboarding_mail(subscriber_email):
-    subject = "Welcome to "
+@celery_app.task
+def send_onboarding_mail(subscriber):
+    subject = "Welcome to Vaccination Slot Notifications for CoWin"
     message = render_to_string(
         "subscribers/onboarding_mail.html",
         {
@@ -25,13 +26,13 @@ def send_onboarding_mail(subscriber_email):
         },
     )
     send_mail(
-        subject, message, None, recipient_list=[subscriber_email], fail_silently=True
+        subject, message, None, recipient_list=[subscriber.email], fail_silently=True
     )
 
 
 @celery_app.task
 def send_slot_mail(subscriber_email, message):
-    subject = "Vaccination slot found!"
+    subject = "Vaccination slot found! | Notification"
     send_mail(
         subject, message, None, recipient_list=[subscriber_email], fail_silently=True
     )

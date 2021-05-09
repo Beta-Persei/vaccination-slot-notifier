@@ -7,10 +7,6 @@ from vaccination_slot_notifier import celery_app
 from subscribers.utils import check_and_notify_subscriber
 
 
-def welcome_user():
-    pass
-
-
 @celery_app.task
 def check_available_slots():
     subscriber_list = Subscriber.objects.filter(
