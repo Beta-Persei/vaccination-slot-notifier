@@ -5,13 +5,13 @@
 
 {% block content %}
 
-<div id="rcorners" class="form-field">
+<div id="search-form">
     <form method="post">
         {% csrf_token %}
 
-        <div id="id_search_type" class="form-field">
-            <label for="search-type-selector"> Search By : </label>
+        <br><h2>Search</h2>
 
+        <div id="id_search_type" class="form-field">
             <div id="search_type-field" name="search-type-selector" class="form-check form-check-inline">
                 {% for choice in form.search_type %}
                     <input id="{{ choice.id_for_label }}" type="radio" name="search_type" value="{{ choice.data.value }}"
@@ -23,10 +23,8 @@
                         {% endif%}>
                         
                     <label for="{{ choice.id_for_label }}" class="form-check-label radio-inline">
-                        {{choice.choice_label}}
-                    </label>
-
-                    <span style="width: 10px;"></span>
+                        <span>By {{choice.choice_label}}</span>
+                    </label><br>
                 {% endfor %}
             </div>
         </div>
@@ -65,7 +63,11 @@
         <br>
 
         <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+        <span id="submit-message">T&c Apply</span>
     </form>
+    
+    <img class="bg-image" id="phone" src="/static/img/undraw_Personal_email_re_4lx7.svg" alt="">
+    <img class="bg-image" id="notif" src="/static/img/undraw_Confirmed_re_sef7213.svg" alt="">
 </div>
 
 {% endblock %}

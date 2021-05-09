@@ -1,47 +1,222 @@
-html {
-  margin: 0;
-  height: 100%;
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: 'Roboto';
-  font-size: 22px;
-  background: linear-gradient(#1abc9c, #0080FF);
+  font-family: 'Rubik', sans-serif;
+  font-size: 18px;
+  background-color: var(--purple);
   height: 100%;
 }
 
+/* Overall page layout */
+header {
+  padding: 2em 4em;
+  font-size: 2em;
 
-
-/* Media Query for low resolution  Tablets, Ipads */
-@media (max-width: 1024px) {
-  main {
-    padding: 60px 100px;
-  }
-}
-
-
-/* Media Query for Laptops and Desktops */
-@media (min-width: 1024px) {
-  main {
-    padding: 60px 350px;
-  }
-}
-
-#header {
-  padding: 60px;
-  text-align: center;
   color: white;
-  font-size: 30px;
-  font-family: 'Roboto';
+  background: linear-gradient(#1c1c1c60, transparent);
 }
 
-#rcorners {
-  border-radius: 5px;
-  background-color: #ffffff;
-  padding: 20px;
+@media (max-width: 600px) {
+  header {
+    padding: 1em;
+  }
+  header h1 {
+    text-align: left; 
+    min-width: unset;
+    font-size: 1.25em !important;
+  }
 }
 
+main {
+  padding: 0 2em;
+}
+
+footer {
+  margin-top: 6em;
+  padding: 4em;
+  font-size: 0.8em;
+  text-align: center;
+
+  color: white;
+  background: linear-gradient(transparent, #1c1c1c80);
+}
+
+a {
+  color: dodgerblue;
+  text-decoration: none;
+  font-weight: bolder;
+  position: relative;
+
+  /* Remove blue highlight in mobile */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.container {
+  max-width: 1000px;
+  padding: 1.5em;
+  margin: auto;
+  animation: slideIn 0.5s ease forwards;
+}
+.container .container {    
+  padding: 1.5em 0;
+}
+.container[class~="large"] {
+  max-width: 1200px;
+}
+.container[class~="medium"] {
+  max-width: 800px;
+}
+.container[class~="small"] {
+  max-width: 600px;
+}
+.container[class~="xsmall"] {
+  max-width: 400px;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    padding: 3em 1.5em;
+  }
+  to {
+    opacity: 1;
+    padding: 1.5em;
+  }
+}
+
+.flexbox {
+  display: flex;
+  flex-direction: row;
+}
+.flexbox[class~="flex-col"] {
+  flex-direction: column;
+}
+.flexbox[class~="flex-row"] {
+  flex-direction: row;
+}
+@media (max-width: 600px) {
+  .flexbox[class~="flex-adapt-row-col"] {
+    flex-direction: column;
+  }
+}
+
+/* Form details */
 .form-field {
-  padding: 10px 0px;
+  padding: 0.5em 0;
+  text-align: left;
+}
+
+#search-form {
+  position: relative;
+  text-align: center;
+  margin: auto;
+
+  width: 20em;
+  height: 40em;
+
+  padding: 1em 2em;
+  padding-bottom: 0;
+  border-radius: 2em;
+  background-color: white;
+
+  box-shadow: -6px 10px 100px 20px #1c1c1c;
+}
+#search-form::before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 4em;
+  height: 1em;
+  top: 0;
+  left: calc(50% - 2em);
+  background-color: black;
+  border-bottom-left-radius: 1em;
+  border-bottom-right-radius: 1em;
+}
+#search-form::after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: calc(100% + 2em);
+  height: calc(100% + 2em);
+  top: -1em;
+  left: -1em;
+  background-color: black;
+  border-radius: 2.5em;
+  z-index: -1;
+}
+
+#search-form form {
+  overflow: scroll;  
+  height: calc(100% - 0.0625em);
+  scrollbar-width: none !important;
+}
+#search-form form::-webkit-scrollbar {
+  display: none;
+}
+#search-form form::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: 1em;
+  bottom: -1em;
+  background-color: black;
+  z-index: 1;
+}
+
+#search_type-field {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+}
+#search_type-field .form-check-input {
+  display: none;
+}
+#search_type-field .form-check-label {
+  margin: auto;
+  width: max-content;
+}
+
+#search-form #submit-message {
+  font-size: 0.75em;
+  margin-top: 1em;
+  color: gray;
+}
+
+#search-form .bg-image {
+  position: absolute;
+  z-index: -1;
+  opacity: 0.75;
+}
+#search-form .bg-image[id="phone"] {
+  top: 6em;
+  right: 6em;
+  width: 40em;
+}
+#search-form .bg-image[id="notif"] {
+  top: 0;
+  left: 10em;
+  width: 25em;
+}
+
+@media (max-width: 600px) {
+  #search-form {
+    width: 16em;
+    height: 32em;
+  }
+
+  #search-form .bg-image[id="phone"] {
+    display: none;
+  }
+  #search-form .bg-image[id="notif"] {
+    display: none;
+  }
 }
