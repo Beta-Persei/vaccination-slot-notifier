@@ -1,0 +1,15 @@
+# https://www.robotstxt.org/robotstxt.html
+
+# Group 1
+User-agent: Googlebot
+Disallow: /admin/
+Disallow: /login/
+
+# Group 2
+User-agent: AdsBot-Google
+Disallow: /admin/
+Disallow: /login/
+
+# Group 3
+User-agent: *
+Allow: /
