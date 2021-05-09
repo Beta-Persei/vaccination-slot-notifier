@@ -1,0 +1,16 @@
+{% autoescape off %}
+Hi!
+
+<b>Thanks for subscribing to updates from CoWin.</b>
+We will send notifications to you when there are slots available in your area.
+
+<b>We use the <a href="https://www.cowin.gov.in/home">Official Co-Win servers.</a></b>
+Your data will <em>never</em> be shared or sold to anyone.
+
+This is an Open Source tool. Code can be found <a href="https://github.com/Beta-Persei/vaccination-slot-notifier">here.</a><br>
+Developed with &hearts; by <a href="https://github.com/Beta-Persei">Beta-Persei</a> 
+
+<hr>
+You are receiving this notification because you've signed up. If you do not want to recieve emails, click
+{{ domain }}{% url 'subscriber-update' pk=subscriber_id  %}
+{% endautoescape %}

@@ -16,6 +16,19 @@ from vaccination_slot_notifier import celery_app
 twilio_client = Client(settings.TWILIO_ACCOUND_SID, settings.TWILIO_AUTH_TOKEN)
 
 
+def send_onboarding_mail(subscriber_email):
+    subject = "Welcome to "
+    message = render_to_string(
+        "subscribers/onboarding_mail.html",
+        {
+            "domain": settings.SITE_HOST_DOMAIN
+        },
+    )
+    send_mail(
+        subject, message, None, recipient_list=[subscriber_email], fail_silently=True
+    )
+
+
 @celery_app.task
 def send_slot_mail(subscriber_email, message):
     subject = "Vaccination slot found!"
@@ -31,6 +44,11 @@ def send_slot_whatsapp(subscriber_number, message):
         from_=f"whatsapp:{settings.TWILIO_PHONE_NUMBER}",
         to=f"whatsapp:{subscriber_number}",
     )
+
+
+@celery_app.task
+def send_slot_sms(subscriber_number, message):
+    pass
 
 
 def create_mail_string(slots):
