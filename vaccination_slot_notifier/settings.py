@@ -38,7 +38,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # Third Party
+    "phonenumber_field",
     "crispy_forms",
+    # Apps
     "subscribers",
 ]
 
@@ -95,9 +98,15 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
 ]
 
 
@@ -158,5 +167,13 @@ DISTRICTS_ENDPOINT = "https://cdn-api.co-vin.in/api/v2/admin/location/districts/
 SNIFFING_INTERVAL_SECONDS = int(os.environ.get("SNIFFING_INTERVAL_SECONDS"))
 MAIL_COOLDOWN_SECONDS = int(os.environ.get("MAIL_COOLDOWN_SECONDS"))
 
-
 SITE_HOST_DOMAIN = os.environ.get("DOMAIN")
+
+# Twilio Settings
+TWILIO_ACCOUND_SID = os.environ.get("ACCOUND_SID")
+TWILIO_AUTH_TOKEN = os.environ.get("AUTH_TOKEN")
+TWILIO_PHONE_NUMBER = os.environ.get("TWILIO_PHONE_NUMBER")
+TWILIO_MAX_SMS_SIZE = 1600
+
+# Phone Number Field
+PHONENUMBER_DEFAULT_REGION = "IN"

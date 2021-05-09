@@ -9,6 +9,38 @@ class Vaccine(Enum):
     COVAXIN = "COVAXIN"
 
 
+class Slots:
+    name: str
+    address: str
+    state_name: str
+    district_name: str
+    block_name: str
+    pincode: int
+    fee_type: str
+    date: str
+    available_capacity: int
+    min_age_limit: int
+    vaccine: Vaccine
+    slots: List[str]
+
+    @classmethod
+    def from_center_session(cls, center, session):
+        obj = cls()
+        obj.date = session.date
+        obj.available_capacity = session.available_capacity
+        obj.min_age_limit = session.min_age_limit
+        obj.vaccine = session.vaccine
+        obj.slots = session.slots
+        obj.name = center.name
+        obj.address = center.address
+        obj.state_name = center.state_name
+        obj.district_name = center.district_name
+        obj.block_name = center.block_name
+        obj.pincode = center.pincode
+        obj.fee_type = center.fee_type
+        return obj
+
+
 class Session:
     session_id: UUID
     date: str

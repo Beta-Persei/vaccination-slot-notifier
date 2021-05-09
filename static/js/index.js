@@ -6,12 +6,11 @@ $(document).ready(function () {
 })
 
 function initializeSearchType() {
-    var searchType = $("#search-type-selector")
+
 
     var showPincode = function (status) {
         if (status) {
             $("#pincode-field").show()
-            $("#district-id-field").val('')
         }
         else {
             $("#pincode-field").hide()
@@ -21,13 +20,16 @@ function initializeSearchType() {
 
     var showDistrict = function (status) {
         if (status) {
-            $("#district-field").show()
-            $('#state-select').change(updateDistricts);
+            $("#district-id-field").show()
+            $("#state-field").show()
+            $('#id_state').change(updateDistricts);
             getStateList()
         }
         else {
-            $("#district-field").hide()
+            $("#district-id-field").hide()
+            $("#state-field").hide()
             $("#district-id-field").val('')
+            $("#state-field").val('')
         }
     }
 
@@ -36,10 +38,10 @@ function initializeSearchType() {
         showDistrict(event == 'district')
     }
 
-    var currentSelection = document.querySelector('input[name="search-type"]:checked').value
+    var currentSelection = document.querySelector('input[name="search_type"]:checked').value
     updateSearchType(currentSelection)
 
-
+    var searchType = $("#search_type-field")
     for (var i = 0; i < searchType.length; i++) {
         searchType[i].addEventListener('change', function (event) {
             updateSearchType(event.target.value)
@@ -53,7 +55,9 @@ function getStateList() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             states = JSON.parse(xhr.responseText)["states"];
-            var mySelect = $('#state-select');
+            var mySelect = $('#id_state');
+            mySelect.empty()
+            mySelect.append('<option class="form-control" value="" disabled selected>Select State</option>')
             states.forEach(element => {
                 mySelect.append(
                     $('<option class="form-control"></option>').val(element["state_id"]).html(element["state_name"])
@@ -68,13 +72,21 @@ function getStateList() {
 }
 
 function updateDistricts() {
-    console.log(this.value)
+    
+    if (this.value === "") {
+        var mySelect = $('#id_district_id');
+        mySelect.empty()
+        mySelect.append('<option class="form-control" value="" disabled selected>Select District</option>')
+        return;
+
+    }
     var xhr = new XMLHttpRequest()
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             states = JSON.parse(xhr.responseText)["districts"];
-            var mySelect = $('#district-select');
+            var mySelect = $('#id_district_id');
             mySelect.empty()
+            mySelect.append('<option class="form-control" value="" disabled selected>Select District</option>')
             states.forEach(element => {
                 mySelect.append(
                     $('<option class="form-control"></option>').val(element["district_id"]).html(element["district_name"])

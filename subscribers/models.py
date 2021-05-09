@@ -4,6 +4,9 @@ from django.db import models
 from django import forms
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+from phonenumber_field.modelfields import PhoneNumberField
+
+
 AGE_CATEGORY = [
     (18, "18+"),
     (45, "45+"),
@@ -12,7 +15,8 @@ AGE_CATEGORY = [
 
 class Subscriber(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    email = models.EmailField("email", max_length=200)
+    email = models.EmailField("email", max_length=200, blank=True, null=True)
+    phone_number = PhoneNumberField("phone number", blank=True, null=True)
     pincode = models.IntegerField(
         "pincode",
         validators=[MinValueValidator(100000), MaxValueValidator(999999)],
