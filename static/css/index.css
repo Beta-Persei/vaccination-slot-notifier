@@ -18,15 +18,24 @@ header {
   color: white;
   background: linear-gradient(#1c1c1c60, transparent);
 }
+header h1 {
+  font-weight: 600 !important;
+}
 
 @media (max-width: 600px) {
   header {
     padding: 1em;
+    background: linear-gradient(#1c1c1cA0, transparent);
   }
   header h1 {
     text-align: left; 
     min-width: unset;
+    margin: 0.5em ;
     font-size: 1.25em !important;
+  }
+  header p {
+    padding: 1em !important;
+    color: lightgray;
   }
 }
 
@@ -186,8 +195,8 @@ a {
 }
 
 #search-form #submit-message {
-  font-size: 0.75em;
-  margin-top: 1em;
+  font-size: 0.6em;
+  margin: 1em 3em;
   color: gray;
 }
 
