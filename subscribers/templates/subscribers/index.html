@@ -1,55 +1,49 @@
 {% extends "subscribers/base.html" %}
 
 {% load crispy_forms_tags %}
-
 {% load static %}
 
 {% block content %}
 
 <div id="rcorners" class="form-field">
-
-
     <form method="post">
         {% csrf_token %}
-
-
 
         <div id="id_search_type" class="form-field">
             <label for="search-type-selector"> Search By : </label>
 
             <div id="search_type-field" name="search-type-selector" class="form-check form-check-inline">
                 {% for choice in form.search_type %}
-                <input id="{{ choice.id_for_label }}" type="radio" name="search_type" value="{{ choice.data.value }}"
-                    class="form-check-input radio-inline" {% if form.search_type.errors %}
-                    {% if form.search_type.errors.0 == choice.data.value %}checked{% endif %} {% else %}
-                    {% if form.search_type.initial == choice.data.value %}checked{% endif %}{% endif%}>
-                <label for="{{ choice.id_for_label }}" class="form-check-label radio-inline">
-                    {{choice.choice_label}}
-                </label>
+                    <input id="{{ choice.id_for_label }}" type="radio" name="search_type" value="{{ choice.data.value }}"
+                        class="form-check-input radio-inline" 
+                        {% if form.search_type.errors %}
+                            {% if form.search_type.errors.0 == choice.data.value %}checked{% endif %} 
+                        {% else %}
+                            {% if form.search_type.initial == choice.data.value %}checked{% endif %}
+                        {% endif%}>
+                        
+                    <label for="{{ choice.id_for_label }}" class="form-check-label radio-inline">
+                        {{choice.choice_label}}
+                    </label>
 
-                <span style="width: 10px;"></span>
-
+                    <span style="width: 10px;"></span>
                 {% endfor %}
             </div>
         </div>
-        <div id="email-field" class="form-field">
 
+        <div id="email-field" class="form-field">
             {{ form.email|as_crispy_field  }}
         </div>
 
-
         <div id="phone_number-field" class="form-field">
-
             {{ form.phone_number|as_crispy_field }}
         </div>
 
         <div id="age_limit-field" class="form-field">
-
             {{ form.age_limit|as_crispy_field }}
         </div>
 
         <div id="pincode-field" class="form-field">
-
             {{ form.pincode|as_crispy_field }}
         </div>
 
@@ -69,8 +63,8 @@
                         
         </div> -->
         <br>
-        <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
 
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
     </form>
 </div>
 
