@@ -26,7 +26,7 @@ class Slots:
     @classmethod
     def from_center_session(cls, center, session):
         obj = cls()
-        obj.date = session.date
+        obj.date = session.date.strftime("%d-%m-%Y")
         obj.available_capacity = session.available_capacity
         obj.min_age_limit = session.min_age_limit
         obj.vaccine = session.vaccine
