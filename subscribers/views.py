@@ -7,7 +7,7 @@ from django.db.models import ObjectDoesNotExist
 
 from subscribers.forms import SubscriberForm
 from subscribers.models import Subscriber
-from subscribers.utils import check_and_notify_subscriber, send_onboarding_mail
+from subscribers.utils import check_and_notify_subscriber, welcome_new_subscriber
 
 
 class SubscriberCreateView(SuccessMessageMixin, FormView):
@@ -21,7 +21,7 @@ class SubscriberCreateView(SuccessMessageMixin, FormView):
 
     def form_valid(self, form):
         obj = form.save()
-        send_onboarding_mail(obj)
+        welcome_new_subscriber(obj)
         check_and_notify_subscriber(obj)
         return super().form_valid(form)
 

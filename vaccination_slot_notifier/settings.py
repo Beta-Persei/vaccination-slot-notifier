@@ -169,6 +169,8 @@ MAIL_COOLDOWN_SECONDS = int(os.environ.get("MAIL_COOLDOWN_SECONDS"))
 
 SITE_HOST_DOMAIN = os.environ.get("DOMAIN")
 
+SMS_SERVICE_ACTIVE = os.environ.get("SMS_SERVICE_ACTIVE")
+
 # Twilio Settings
 TWILIO_ACCOUND_SID = os.environ.get("TWILIO_ACCOUND_SID")
 TWILIO_AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN")

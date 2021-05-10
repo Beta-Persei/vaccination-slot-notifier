@@ -2,10 +2,11 @@ import requests
 from datetime import datetime
 import textwrap
 
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 from django.shortcuts import resolve_url
 from django.template.loader import render_to_string
 from django.conf import settings
+from django.utils.html import strip_tags
 from twilio.rest import Client
 
 from sniffer.api import get_centers_by_district_id, get_centers_by_pincode
@@ -13,33 +14,23 @@ from sniffer.models import Slots
 from vaccination_slot_notifier import celery_app
 
 
-twilio_client = Client(settings.TWILIO_ACCOUND_SID, settings.TWILIO_AUTH_TOKEN)
-
-
 @celery_app.task
-def send_onboarding_mail(subscriber):
-    subject = "Welcome to Vaccination Slot Notifications for CoWin"
-    message = render_to_string(
-        "subscribers/onboarding_mail.html",
-        {
-            "domain": settings.SITE_HOST_DOMAIN
-        },
+def send_mail(email, subject, message):
+    msg = EmailMessage(
+        subject,
+        message,
+        None,
+        to=[email],
     )
-    send_mail(
-        subject, message, None, recipient_list=[subscriber.email], fail_silently=True
+    msg.content_subtype = "html"
+    msg.send(
+        fail_silently=True,
     )
 
 
 @celery_app.task
-def send_slot_mail(subscriber_email, message):
-    subject = "Vaccination slot found! | Notification"
-    send_mail(
-        subject, message, None, recipient_list=[subscriber_email], fail_silently=True
-    )
-
-
-@celery_app.task
-def send_slot_whatsapp(subscriber_number, message):
+def send_whatsapp(subscriber_number, message):
+    twilio_client = Client(settings.TWILIO_ACCOUND_SID, settings.TWILIO_AUTH_TOKEN)
     message = twilio_client.messages.create(
         body=message,
         from_=f"whatsapp:{settings.TWILIO_PHONE_NUMBER}",
@@ -48,24 +39,13 @@ def send_slot_whatsapp(subscriber_number, message):
 
 
 @celery_app.task
-def send_slot_sms(subscriber_number, message):
-    pass
-
-
-def create_mail_string(slots):
-    message_text = ""
-    for slot in slots:
-        slot_text = ", ".join(slot.slots)
-        date_text = slot.date.strftime("%d-%m-%Y")
-        message_text += f"""
-Center : {slot.name}, {slot.address}, {slot.district_name}, {slot.state_name}, {slot.pincode}
-Date : {date_text}
-Vaccine : {slot.vaccine}
-Slot Timings : {slot_text}
-Total Slots available : {slot.available_capacity}
-
-    """
-    return message_text
+def send_sms(subscriber_number, message):
+    twilio_client = Client(settings.TWILIO_ACCOUND_SID, settings.TWILIO_AUTH_TOKEN)
+    message = twilio_client.messages.create(
+        body=message,
+        from_=f"{settings.TWILIO_PHONE_NUMBER}",
+        to=f"{subscriber_number}",
+    )
 
 
 def create_message_strings(slots):
@@ -74,9 +54,8 @@ def create_message_strings(slots):
     for slot in slots:
 
         slot_text = ", ".join(slot.slots)
-        date_text = slot.date.strftime("%d-%m-%Y")
         center_text = f"""
-{slot.name}, {slot.address}, {slot.district_name}, {slot.state_name}, {slot.pincode} on {date_text}. Slots available {slot.available_capacity} ({slot.vaccine})
+{slot.name}, {slot.address}, {slot.district_name}, {slot.state_name}, {slot.pincode} on {slot.date}. Slots available {slot.available_capacity} ({slot.vaccine})
 
         """
         if len(center_text) + len(message_text) >= settings.TWILIO_MAX_SMS_SIZE:
@@ -88,7 +67,20 @@ def create_message_strings(slots):
     return message_texts
 
 
-def filter_centers(centers, age_limit):
+def welcome_new_subscriber(subscriber):
+    subject = "Welcome to Vaccination Slot Notifications for CoWin"
+    message = render_to_string(
+        "subscribers/onboarding_mail.html",
+        {
+            "domain": settings.SITE_HOST_DOMAIN,
+            "subscriber_id": subscriber.id,
+            "mail_time_interval_mins": settings.MAIL_COOLDOWN_SECONDS // 60,
+        },
+    )
+    send_mail.delay(subscriber.email, subject, message)
+
+
+def _filter_centers(centers, age_limit):
     filtered_slots = []
     for center in centers:
         for session in center.sessions:
@@ -105,18 +97,20 @@ def check_and_notify_subscriber(subscriber):
     else:
         return
 
-    filtered_slots = filter_centers(centers, subscriber.age_limit)
+    filtered_slots = _filter_centers(centers, subscriber.age_limit)
     if filtered_slots:
         if subscriber.email:
             message = render_to_string(
                 "subscribers/notification_mail.html",
                 {
                     "domain": settings.SITE_HOST_DOMAIN,
-                    "centers": create_mail_string(filtered_slots),
+                    "slots": filtered_slots,
                     "subscriber_id": subscriber.id,
                 },
             )
-            send_slot_mail.delay(subscriber.email, message)
-        if subscriber.phone_number:
+            subject = "Vaccination slot found! | Notification"
+            send_mail.delay(subscriber.email, subject, message)
+
+        if settings.SMS_SERVICE_ACTIVE and subscriber.phone_number:
             for message in create_message_strings(filtered_slots):
-                send_slot_whatsapp.delay(subscriber.phone_number.as_e164, message)
+                send_whatsapp.delay(subscriber.phone_number.as_e164, message)

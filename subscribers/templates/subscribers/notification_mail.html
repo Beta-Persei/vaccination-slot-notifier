@@ -1,11 +1,22 @@
 {% autoescape off %}
 Hi!
-
+<br>
 We have found the following available vaccination slots for you
-
-{{ centers }}
-
+<br>
+<br>
+{% for slot in slots  %}
+Center : {{slot.name}}, {{slot.address}}, {{slot.district_name}}, {{slot.state_name}}, {{slot.pincode}}
+<br>
+Date : {{slot.date}}
+<br>
+Vaccine : {{slot.vaccine}}
+<br>
+Total Slots available : {{slot.available_capacity}}
+<br>
+<br>
+{% endfor %}
+<br>
 <hr>
-You are receiving this notification because you've signed up. If you do not want to recieve emails, click
-{{ domain }}{% url 'subscriber-update' pk=subscriber_id  %}
+You are receiving this mail because you've signed up. If you do not want to recieve emails, click <a
+    href="{{ domain }}{% url 'subscriber-update' pk=subscriber_id  %}">here</a>
 {% endautoescape %}
