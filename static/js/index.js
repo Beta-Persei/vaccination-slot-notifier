@@ -27,9 +27,12 @@ $(document).ready(function () {
         }
     }
 
-    let updateSearchType = function (event) {
-        showPincode(event == 'pincode')
-        showDistrict(event == 'district')
+    let updateSearchType = (type) => {
+        showPincode(type == 'pincode')
+        showDistrict(type == 'district')
+
+        $('.form-check-label').removeClass("selected")
+        $(`#label-${type}`).addClass("selected")
     }
 
     let currentSelection = document.querySelector('input[name="search_type"]:checked').value
@@ -37,7 +40,7 @@ $(document).ready(function () {
 
     let searchType = $("#search_type-field")
     for (const type of searchType) {
-        type.addEventListener('change', function (event) {
+        type.addEventListener('change', (event) => {
             updateSearchType(event.target.value)
         })
     }

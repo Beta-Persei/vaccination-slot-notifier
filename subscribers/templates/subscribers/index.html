@@ -14,6 +14,10 @@
         <div id="id_search_type" class="form-field">
             <div id="search_type-field" name="search-type-selector" class="form-check form-check-inline">
                 {% for choice in form.search_type %}
+                    <label for="{{ choice.id_for_label }}" id="label-{{ choice.data.value }}" class="form-check-label radio-inline">
+                        <span>By {{choice.choice_label}}</span>
+                    </label>
+
                     <input id="{{ choice.id_for_label }}" type="radio" name="search_type" value="{{ choice.data.value }}"
                         class="form-check-input radio-inline" 
                         {% if form.search_type.errors %}
@@ -21,10 +25,6 @@
                         {% else %}
                             {% if form.search_type.initial == choice.data.value %}checked{% endif %}
                         {% endif%}>
-                        
-                    <label for="{{ choice.id_for_label }}" class="form-check-label radio-inline">
-                        <span>By {{choice.choice_label}}</span>
-                    </label>
                 {% endfor %}
             </div>
         </div>
