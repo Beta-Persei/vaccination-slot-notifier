@@ -98,6 +98,9 @@ def check_and_notify_subscriber(subscriber):
     else:
         return
 
+    if not centers:
+        return
+
     filtered_slots = _filter_centers(centers, subscriber.age_limit)
     if filtered_slots:
         if subscriber.email:
