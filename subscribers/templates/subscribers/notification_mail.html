@@ -1,6 +1,6 @@
 {% autoescape off %}
 
-<div style="background-color: #eee; padding: 2em; font-family:Tahoma; font-size:14px; line-height:24px; margin-bottom:8px;">
+<div style="background-color: #eee; padding: 2em; font-family:Tahoma; font-size:14px; line-height:24px; margin-bottom:8px; box-sizing: border-box;">
     <h2 style="text-align: center;">Vaccination Slot Notifications</h2>
     <div style="background-color: #fff; max-width: 700px; margin: 2em auto; padding: 2em; border-radius: 20px;">
         Hi!
@@ -11,12 +11,13 @@
         <b>Center: {{slot.name}}</b><br>
         Address: {{slot.address}}, {{slot.district_name}}, {{slot.state_name}}, {{slot.pincode}}<br>
         Date: {{slot.date}}<br>
-        Vaccine: {{slot.vaccine}}<br>
-        Fee: {{slot.fee_type}}<br>
-        Total Slots available: {{slot.available_capacity}}
+        Vaccine: {{slot.vaccine}}, <em>{{slot.fee_type}}</em><br>
+        <b style="color: gray;">{{slot.available_capacity}} Slots Available.</b>
         <br><br>
         {% endfor %}
-        Book your slots now. Click <a href="https://selfregistration.cowin.gov.in/">here</a>
+        <br>
+        <a style="background-color: purple; color: white; padding: 1em 2em; text-decoration: none;"
+           href="https://selfregistration.cowin.gov.in/">Book your Slot</a>
         <br><br>
         <hr>
         <p style="color: #6e6e6e; font-size: 12px;">
