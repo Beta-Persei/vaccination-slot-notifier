@@ -2,7 +2,6 @@ import requests
 from datetime import datetime
 import textwrap
 
-from constance import config
 from django.core.mail import EmailMessage
 from django.shortcuts import resolve_url
 from django.template.loader import render_to_string
@@ -75,7 +74,7 @@ def welcome_new_subscriber(subscriber):
         {
             "domain": settings.SITE_HOST_DOMAIN,
             "subscriber_id": subscriber.id,
-            "mail_time_interval_mins": config.MAIL_COOLDOWN_SECONDS // 60,
+            "mail_time_interval_mins": settings.MAIL_COOLDOWN_SECONDS // 60,
         },
     )
     send_mail.delay(subscriber.email, subject, message)
@@ -112,6 +111,6 @@ def check_and_notify_subscriber(subscriber):
             subject = "Vaccination slot found! | Notification"
             send_mail.delay(subscriber.email, subject, message)
 
-        if config.SMS_SERVICE_ACTIVE and subscriber.phone_number:
+        if settings.SMS_SERVICE_ACTIVE and subscriber.phone_number:
             for message in create_message_strings(filtered_slots):
                 send_whatsapp.delay(subscriber.phone_number.as_e164, message)
