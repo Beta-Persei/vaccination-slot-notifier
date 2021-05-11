@@ -133,7 +133,7 @@ a {
 
   padding: 1em 2em;
   padding-bottom: 0;
-  border-radius: 2em;
+  border-radius: 2.5em;
   background-color: white;
 
   box-shadow: -6px 10px 100px 20px #1c1c1c;
@@ -142,10 +142,10 @@ a {
   content: '';
   display: block;
   position: absolute;
-  width: 4em;
+  width: 8em;
   height: 1em;
-  top: 0;
-  left: calc(50% - 2em);
+  top: -0.125em;
+  left: calc(50% - 4em);
   background-color: black;
   border-bottom-left-radius: 1em;
   border-bottom-right-radius: 1em;
@@ -159,13 +159,13 @@ a {
   top: -1em;
   left: -1em;
   background-color: black;
-  border-radius: 2.5em;
+  border-radius: 3em;
   z-index: -1;
 }
 
 #search-form form {
   overflow: scroll;  
-  height: calc(100% - 0.0625em);
+  height: 100%;
   scrollbar-width: none !important;
 }
 #search-form form::-webkit-scrollbar {
@@ -185,6 +185,7 @@ a {
   display: flex;
   flex-direction: row;
   text-align: center;
+  margin: 0;
 }
 #search_type-field .form-check-input {
   display: none;
@@ -192,6 +193,7 @@ a {
 #search_type-field .form-check-label {
   margin: auto;
   width: max-content;
+  font-size: 0.8em;
 }
 
 #search-form #submit-message {
