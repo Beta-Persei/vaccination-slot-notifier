@@ -42,6 +42,5 @@ jobs:
         SQL_PASSWORD: dbpass
         SQL_HOST: localhost
         SQL_PORT: 5432
-    - name: Run Tests
       run: |
         python manage.py test
