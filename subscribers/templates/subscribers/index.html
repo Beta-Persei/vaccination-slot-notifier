@@ -14,6 +14,10 @@
         <div id="id_search_type" class="form-field">
             <div id="search_type-field" name="search-type-selector" class="form-check form-check-inline">
                 {% for choice in form.search_type %}
+                    <label for="{{ choice.id_for_label }}" id="label-{{ choice.data.value }}" class="form-check-label radio-inline">
+                        <span>By {{choice.choice_label}}</span>
+                    </label>
+
                     <input id="{{ choice.id_for_label }}" type="radio" name="search_type" value="{{ choice.data.value }}"
                         class="form-check-input radio-inline" 
                         {% if form.search_type.errors %}
@@ -21,10 +25,6 @@
                         {% else %}
                             {% if form.search_type.initial == choice.data.value %}checked{% endif %}
                         {% endif%}>
-                        
-                    <label for="{{ choice.id_for_label }}" class="form-check-label radio-inline">
-                        <span>By {{choice.choice_label}}</span>
-                    </label><br>
                 {% endfor %}
             </div>
         </div>
@@ -63,7 +63,7 @@
         <br>
 
         <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
-        <p id="submit-message">By submitting this form, you agree to the privacy policy.</p>
+        <p id="submit-message">By submitting this form, you agree to the <a href="/privacy">privacy policy.</a></p>
     </form>
     
     <img class="bg-image" id="phone" src="/static/img/undraw_Personal_email_re_4lx7.svg" alt="">

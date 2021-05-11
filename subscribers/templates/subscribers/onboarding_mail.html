@@ -1,20 +1,27 @@
 {% autoescape off %}
-Hi!
-<br>
-<br>
-Thanks for subscribing to updates about CoWin slot availability.
-We will send notifications to you when there are slots available in your area.
-<br>
-We use the <b><a href="https://www.cowin.gov.in/home">Official Co-Win servers</a></b>. We will be sending you updates
-every {{mail_time_interval_mins}} minutes if slots are available.
-Your data will <b><em>never</em></b> be shared or sold to anyone.
-<br>
-<br>
-This is an Open Source tool. Code can be found <a
-    href="https://github.com/Beta-Persei/vaccination-slot-notifier">here</a>.<br>
-Developed with &hearts; by <a href="https://github.com/Beta-Persei">Beta-Persei</a>
-<br>
-<hr>
-You are receiving this mail because you've signed up. If you do not want to recieve emails, click <a href="{{ domain }}{% url 'subscriber-update' pk=subscriber_id  %}">here</a>
+
+<div style="background-color: #eee; padding: 2em; font-family:Tahoma; font-size:14px; line-height:24px; margin-bottom:8px;">
+    <h2 style="text-align: center;">Vaccination Slot Notifications</h2>
+    <div style="background-color: #fff; max-width: 700px; margin: 2em auto; padding: 2em; border-radius: 20px;">
+        Hi!
+        <br><br>
+        Thanks for subscribing to updates about CoWin slot availability.
+        We will send notifications to you when there are slots available in your area.
+        <br><br>
+        We use the <b><a href="https://www.cowin.gov.in/home">Official Co-Win servers</a></b>. We will be sending you updates
+        every {{mail_time_interval_mins}} minutes if slots are available.
+        Your data will <b><em>never</em></b> be shared or sold to anyone.
+        <br><br>
+        This is an Open Source tool. Code can be found <a href="https://github.com/Beta-Persei/vaccination-slot-notifier">here.</a><br>
+        Developed with &hearts; by <a href="https://github.com/Beta-Persei">Beta-Persei</a>
+        <br><br>
+        <hr>
+        <p style="color: #6e6e6e; font-size: 12px;">
+            You are receiving this mail because you've signed up to <a href="{{ domain }}">Vaccination Slot Notifications.</a> 
+            If you do not want to recieve emails, 
+            <a href="{{ domain }}{% url 'subscriber-update' pk=subscriber_id  %}">click here to unsubsribe.</a>
+        </p>
+    </div>
+</div>
 
 {% endautoescape %}

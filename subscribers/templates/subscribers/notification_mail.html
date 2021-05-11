@@ -1,22 +1,28 @@
 {% autoescape off %}
-Hi!
-<br>
-We have found the following available vaccination slots for you
-<br>
-<br>
-{% for slot in slots  %}
-Center : {{slot.name}}, {{slot.address}}, {{slot.district_name}}, {{slot.state_name}}, {{slot.pincode}}
-<br>
-Date : {{slot.date}}
-<br>
-Vaccine : {{slot.vaccine}}
-<br>
-Total Slots available : {{slot.available_capacity}}
-<br>
-<br>
-{% endfor %}
-<br>
-<hr>
-You are receiving this mail because you've signed up. If you do not want to recieve emails, click <a
-    href="{{ domain }}{% url 'subscriber-update' pk=subscriber_id  %}">here</a>
+
+<div style="background-color: #eee; padding: 2em; font-family:Tahoma; font-size:14px; line-height:24px; margin-bottom:8px;">
+    <h2 style="text-align: center;">Vaccination Slot Notifications</h2>
+    <div style="background-color: #fff; max-width: 700px; margin: 2em auto; padding: 2em; border-radius: 20px;">
+        Hi!
+        <br>
+        We have found the following available vaccination slots for you.
+        <br><br>
+        {% for slot in slots %}
+        <b>Center: {{slot.name}}</b><br>
+        Address: {{slot.address}}, {{slot.district_name}}, {{slot.state_name}}, {{slot.pincode}}<br>
+        Date: {{slot.date}}<br>
+        Vaccine: {{slot.vaccine}}<br>
+        Total Slots available: {{slot.available_capacity}}
+        <br><br>
+        {% endfor %}
+        <br><br>
+        <hr>
+        <p style="color: #6e6e6e; font-size: 12px;">
+            You are receiving this mail because you've signed up to <a href="{{ domain }}">Vaccination Slot Notifications.</a> 
+            If you do not want to recieve emails, 
+            <a href="{{ domain }}{% url 'subscriber-update' pk=subscriber_id  %}">click here to unsubsribe.</a>
+        </p>
+    </div>
+</div>
+
 {% endautoescape %}
