@@ -53,3 +53,5 @@ jobs:
         CELERY_BROKER_URL: "redis://localhost:6379"
       run: |
         python manage.py test
+        black --check .
+        
