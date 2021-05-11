@@ -28,6 +28,10 @@ jobs:
         postgresql db: db
         postgresql user: dbuser
         postgresql password: dbpass
+    - name: Start Redis
+      uses: supercharge/redis-github-action@1.2.0
+      with:
+        redis-version: 5
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
