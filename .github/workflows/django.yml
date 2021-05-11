@@ -37,10 +37,15 @@ jobs:
         DEBUG: 1
         SECRET_KEY: foo
         DJANGO_ALLOWED_HOSTS: "*"
+        SQL_ENGINE: django.db.backends.postgresql_psycopg2
         SQL_DATABASE: db
         SQL_USER: dbuser
         SQL_PASSWORD: dbpass
         SQL_HOST: localhost
         SQL_PORT: 5432
+        SNIFFING_INTERVAL_SECONDS: 300
+        MAIL_COOLDOWN_SECONDS: 1800
+        DOMAIN: "http://localhost:8000"
+        CELERY_BROKER_URL: "redis://localhost:6379"
       run: |
         python manage.py test
