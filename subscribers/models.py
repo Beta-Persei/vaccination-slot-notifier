@@ -45,4 +45,4 @@ class Subscriber(models.Model):
     )
 
     def __str__(self):
-        return self.email or self.phone_number or self.id
+        return self.email or str(self.phone_number) or self.id

@@ -14,6 +14,7 @@ Django==3.2.1
 django-constance==2.8.0
 django-crispy-forms==1.11.2
 django-phonenumber-field==5.1.0
+gunicorn==20.1.0
 idna==2.10
 kombu==5.0.2
 mypy-extensions==0.4.3
