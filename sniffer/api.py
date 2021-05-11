@@ -30,7 +30,9 @@ def get_centers_by_pincode(pincode):
     res = requests.get(
         settings.PINCODE_SLOT_ENDPOINT, params=query_params, headers=headers
     )
-    return parse_centers(res.json()["centers"])
+
+    if res.status_code == 200:
+        return parse_centers(res.json()["centers"])
 
 
 def get_centers_by_district_id(district_id):
@@ -41,7 +43,9 @@ def get_centers_by_district_id(district_id):
     res = requests.get(
         settings.DISTRICT_SLOT_ENDPOINT, params=query_params, headers=headers
     )
-    return parse_centers(res.json()["centers"])
+
+    if res.status_code == 200:
+        return parse_centers(res.json()["centers"])
 
 
 def get_states():
