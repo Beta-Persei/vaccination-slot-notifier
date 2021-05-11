@@ -18,6 +18,9 @@ class SubscriberCreateView(SuccessMessageMixin, FormView):
         "You will be notified via email whenever a vaccinaton slot is available!"
     )
     success_url = "/"
+    extra_context = {
+        "subscriber_count": Subscriber.objects.count()
+    }
 
     def form_valid(self, form):
         obj = form.save()
