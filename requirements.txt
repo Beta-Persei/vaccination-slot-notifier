@@ -11,6 +11,7 @@ click-didyoumean==0.0.3
 click-plugins==1.1.1
 click-repl==0.1.6
 Django==3.2.1
+django-constance==2.8.0
 django-crispy-forms==1.11.2
 django-phonenumber-field==5.1.0
 idna==2.10

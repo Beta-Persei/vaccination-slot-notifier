@@ -24,7 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG", default=True)
+DEBUG = bool(int(os.environ.get("DEBUG")))
+
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(" ")
 
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     # Third Party
     "phonenumber_field",
     "crispy_forms",
+    "constance",
     # Apps
     "subscribers",
 ]
@@ -164,12 +166,8 @@ PINCODE_SLOT_ENDPOINT = (
 STATES_ENDPOINT = "https://cdn-api.co-vin.in/api/v2/admin/location/states"
 DISTRICTS_ENDPOINT = "https://cdn-api.co-vin.in/api/v2/admin/location/districts/%s"
 
-SNIFFING_INTERVAL_SECONDS = int(os.environ.get("SNIFFING_INTERVAL_SECONDS"))
-MAIL_COOLDOWN_SECONDS = int(os.environ.get("MAIL_COOLDOWN_SECONDS"))
 
 SITE_HOST_DOMAIN = os.environ.get("DOMAIN")
-
-SMS_SERVICE_ACTIVE = os.environ.get("SMS_SERVICE_ACTIVE")
 
 # Twilio Settings
 TWILIO_ACCOUND_SID = os.environ.get("TWILIO_ACCOUND_SID")
@@ -179,3 +177,10 @@ TWILIO_MAX_SMS_SIZE = 1600
 
 # Phone Number Field
 PHONENUMBER_DEFAULT_REGION = "IN"
+
+# Constance Settings
+CONSTANCE_CONFIG = {
+    "SMS_SERVICE_ACTIVE": (False, "Whether SMS service is active or not"),
+    "SNIFFING_INTERVAL_SECONDS": (300, "Seconds between each sniffer iteration"),
+    "MAIL_COOLDOWN_SECONDS": (1800, "Seconds before a new mail is sent to a user."),
+}
