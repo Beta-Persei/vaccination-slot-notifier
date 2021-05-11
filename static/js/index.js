@@ -1,15 +1,9 @@
 const statesUrl = "https://cdn-api.co-vin.in/api/v2/admin/location/states"
-const districtUrl = "https://cdn-api.co-vin.in/api/v2/admin/location/districts/"
+const districtUrl = "https://cdn-api.co-vin.in/api/v2/admin/location/districts"
 
 $(document).ready(function () {
-    initializeSearchType()
-})
-
-function initializeSearchType() {
-
-
-    var showPincode = function (status) {
-        if (status) {
+    let showPincode = (show) => {
+        if (show) {
             $("#pincode-field").show()
         }
         else {
@@ -18,8 +12,8 @@ function initializeSearchType() {
         }
     }
 
-    var showDistrict = function (status) {
-        if (status) {
+    let showDistrict = (show) => {
+        if (show) {
             $("#district-id-field").show()
             $("#state-field").show()
             $('#id_state').change(updateDistricts);
@@ -33,69 +27,60 @@ function initializeSearchType() {
         }
     }
 
-    var updateSearchType = function (event) {
+    let updateSearchType = function (event) {
         showPincode(event == 'pincode')
         showDistrict(event == 'district')
     }
 
-    var currentSelection = document.querySelector('input[name="search_type"]:checked').value
+    let currentSelection = document.querySelector('input[name="search_type"]:checked').value
     updateSearchType(currentSelection)
 
-    var searchType = $("#search_type-field")
-    for (var i = 0; i < searchType.length; i++) {
-        searchType[i].addEventListener('change', function (event) {
+    let searchType = $("#search_type-field")
+    for (const type of searchType) {
+        type.addEventListener('change', function (event) {
             updateSearchType(event.target.value)
-        });
+        })
     }
-}
+})
 
 function getStateList() {
-    var states = {}
-    var xhr = new XMLHttpRequest()
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-            states = JSON.parse(xhr.responseText)["states"];
-            var mySelect = $('#id_state');
-            mySelect.empty()
-            mySelect.append('<option class="form-control" value="" disabled selected>Select State</option>')
-            states.forEach(element => {
-                mySelect.append(
-                    $('<option class="form-control"></option>').val(element["state_id"]).html(element["state_name"])
-                );
-            });
-            mySelect.trigger('change')
-        }
-    }
-    xhr.open('GET', statesUrl);
-    xhr.send()
+    let state = $('#id_state');
 
+    fetch(statesUrl)
+        .then((response) => response.json())
+        .then(({ states }) => {
+            state.empty()
+            state.append('<option class="form-control" value="" disabled selected>Select State</option>')
+            states.forEach(element => {
+                state.append(
+                    $('<option class="form-control"></option>').val(element["state_id"]).html(element["state_name"])
+                )
+            })
+            state.trigger('change')
+        })
+        .catch((error) => alert("An error occurred, please try again."))
 }
 
 function updateDistricts() {
+    let district = $('#id_district_id');
     
-    if (this.value === "") {
-        var mySelect = $('#id_district_id');
-        mySelect.empty()
-        mySelect.append('<option class="form-control" value="" disabled selected>Select District</option>')
-        return;
-
+    if (!this.value) {
+        district.empty()
+        district.append('<option class="form-control" value="" disabled selected>Select District</option>')
+        return
     }
-    var xhr = new XMLHttpRequest()
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-            states = JSON.parse(xhr.responseText)["districts"];
-            var mySelect = $('#id_district_id');
-            mySelect.empty()
-            mySelect.append('<option class="form-control" value="" disabled selected>Select District</option>')
-            states.forEach(element => {
-                mySelect.append(
+
+    fetch(`${districtUrl}/${this.value}`)
+        .then((response) => response.json())
+        .then(({ districts }) => {
+            district.empty()
+            district.append('<option class="form-control" value="" disabled selected>Select District</option>')
+            districts.forEach(element => {
+                district.append(
                     $('<option class="form-control"></option>').val(element["district_id"]).html(element["district_name"])
-                );
-            });
-            mySelect.trigger('change')
-        }
-    }
-    xhr.open('GET', districtUrl + this.value);
-    xhr.send()
-
+                )
+            })
+            district.trigger('change')
+        })
+        .catch((error) => alert("An error occurred, please try again."))
 }
