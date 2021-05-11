@@ -34,7 +34,7 @@ jobs:
         pip install -r requirements.txt
     - name: Run Tests
       env:
-        DEBUG: true
+        DEBUG: 1
         SECRET_KEY: foo
         DJANGO_ALLOWED_HOSTS: "*"
         SQL_DATABASE: db
