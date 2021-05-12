@@ -1,10 +1,9 @@
 from datetime import datetime
-import requests
 
+import requests
 from django.conf import settings
 
 from sniffer.utils import parse_centers
-
 
 headers = {
     "authority": "cdn-api.co-vin.in",

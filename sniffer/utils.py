@@ -1,4 +1,4 @@
-from sniffer.models import Center, State, District
+from sniffer.models import Center, District, State
 
 
 def parse_centers(center_list):

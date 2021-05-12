@@ -1,7 +1,7 @@
-from enum import Enum
-from uuid import UUID
-from typing import List
 from datetime import datetime
+from enum import Enum
+from typing import List
+from uuid import UUID
 
 
 class Vaccine(Enum):

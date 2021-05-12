@@ -1,11 +1,9 @@
 import uuid
 
-from django.db import models
 from django import forms
 from django.core.validators import MaxValueValidator, MinValueValidator
-
+from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
-
 
 AGE_CATEGORY = [
     (18, "18+"),

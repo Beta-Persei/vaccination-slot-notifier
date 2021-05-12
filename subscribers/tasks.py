@@ -3,8 +3,8 @@ from datetime import datetime, timedelta
 from constance import config
 
 from subscribers.models import Subscriber
-from vaccination_slot_notifier import celery_app
 from subscribers.utils import check_and_notify_subscriber
+from vaccination_slot_notifier import celery_app
 
 
 @celery_app.task

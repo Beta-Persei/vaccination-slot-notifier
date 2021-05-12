@@ -1,10 +1,9 @@
-from django.forms import ModelForm, ValidationError
-from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+from django import forms
+from django.forms import ModelForm, ValidationError
 
 from subscribers.models import Subscriber
-
 
 SEARCH_TYPE_CHOICES = (("pincode", "Pincode"), ("district", "District"))
 
