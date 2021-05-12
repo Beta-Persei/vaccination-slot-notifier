@@ -231,8 +231,9 @@ a {
 
 @media (max-width: 600px) {
   #search-form {
-    width: 16em;
-    height: 32em;
+    width: 18em;
+    height: fit-content;
+    padding: 1em;
   }
 
   #search-form .bg-image[id="phone"] {
