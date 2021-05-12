@@ -17,13 +17,17 @@ class SubscriberCreateView(SuccessMessageMixin, FormView):
         "You will be notified via email whenever a vaccinaton slot is available!"
     )
     success_url = "/"
-    extra_context = {"subscriber_count": Subscriber.objects.count()}
 
     def form_valid(self, form):
         obj = form.save()
         welcome_new_subscriber(obj)
         check_and_notify_subscriber(obj)
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["subscriber_count"] = Subscriber.objects.count()
+        return context
 
 
 def unsubscribe_view(request, pk):
