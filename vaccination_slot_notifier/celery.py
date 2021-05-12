@@ -1,11 +1,10 @@
 from __future__ import absolute_import
+
 import os
 from datetime import datetime, timedelta
 
 from celery import Celery
 from django.conf import settings
-
-
 from dotenv import load_dotenv
 
 load_dotenv()

@@ -1,12 +1,12 @@
-import requests
-from datetime import datetime
 import textwrap
+from datetime import datetime
 
+import requests
 from constance import config
+from django.conf import settings
 from django.core.mail import EmailMessage
 from django.shortcuts import resolve_url
 from django.template.loader import render_to_string
-from django.conf import settings
 from django.utils.html import strip_tags
 from twilio.rest import Client
 

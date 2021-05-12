@@ -1,6 +1,6 @@
-from django.urls import path, include
-from subscribers.views import SubscriberCreateView, unsubscribe_view
+from django.urls import include, path
 
+from subscribers.views import SubscriberCreateView, unsubscribe_view
 
 urlpatterns = [
     path("", SubscriberCreateView.as_view(), name="subscriber-add"),

@@ -1,9 +1,8 @@
 from django.contrib import messages
-from django.shortcuts import render, redirect
-from django.views.generic.edit import FormView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import ObjectDoesNotExist
-
+from django.shortcuts import redirect, render
+from django.views.generic.edit import FormView
 
 from subscribers.forms import SubscriberForm
 from subscribers.models import Subscriber
@@ -18,9 +17,7 @@ class SubscriberCreateView(SuccessMessageMixin, FormView):
         "You will be notified via email whenever a vaccinaton slot is available!"
     )
     success_url = "/"
-    extra_context = {
-        "subscriber_count": Subscriber.objects.count()
-    }
+    extra_context = {"subscriber_count": Subscriber.objects.count()}
 
     def form_valid(self, form):
         obj = form.save()
