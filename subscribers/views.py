@@ -20,8 +20,8 @@ class SubscriberCreateView(SuccessMessageMixin, FormView):
 
     def form_valid(self, form):
         obj = form.save()
-        welcome_new_subscriber(obj)
-        check_and_notify_subscriber(obj)
+        obj.send_welcome_mail()
+        obj.check_and_notify_slots()
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):

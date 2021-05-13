@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 
+from celery.schedules import crontab
 from constance import config
 
 from subscribers.models import Subscriber
@@ -15,11 +16,24 @@ def check_available_slots():
         - timedelta(seconds=config.MAIL_COOLDOWN_SECONDS),
     )
     for subscriber in subscriber_list:
-        check_and_notify_subscriber(subscriber)
+        subscriber.check_and_notify_subscriber()
+
+
+@celery_app.task
+def refresh_sms_count():
+    Subscriber.objects.update(daily_sms_count=0)
 
 
 @celery_app.on_after_finalize.connect
 def setup_periodic_tasks(sender, **kwargs):
     sender.add_periodic_task(
         config.SNIFFING_INTERVAL_SECONDS, check_available_slots.s()
+    )
+
+    sender.add_periodic_task(
+        crontab(
+            hour=0,
+            minute=0,
+        ),
+        refresh_sms_count.s(),
     )
