@@ -26,7 +26,11 @@ def refresh_sms_count():
 @celery_app.on_after_finalize.connect
 def setup_periodic_tasks(sender, **kwargs):
     sender.add_periodic_task(
-        config.SNIFFING_INTERVAL_SECONDS, check_available_slots.s()
+        crontab(
+            hour="5-22",
+            minute="*/5",
+        ),
+        check_available_slots.s(),
     )
 
     sender.add_periodic_task(
