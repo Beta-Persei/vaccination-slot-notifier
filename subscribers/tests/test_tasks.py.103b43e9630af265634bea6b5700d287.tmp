@@ -1,0 +1,22 @@
+from django.test import TestCase
+
+from subscribers.models import Subscriber
+from subscribers.tasks import refresh_sms_count
+
+
+
+class TestSubscriberUtils(TestCase):
+    
+    def setUp(self):
+        self.subscribers = [Subscriber.objects.create(
+            email="foo@bar.com", pincode=111111, daily_sms_count=10
+        ),
+         Subscriber.objects.create(
+            phone_number="9999999999", district_id=1, daily_sms_count=12
+        )]
+
+        return super().setUp()
+
+
+    def test_refresh_sms_count(self):
+

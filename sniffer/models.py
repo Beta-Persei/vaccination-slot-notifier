@@ -98,31 +98,3 @@ class Center:
         obj.fee_type = json["fee_type"]
         obj.sessions = [Session(**x) for x in json["sessions"]]
         return obj
-
-
-class State:
-    state_id: int
-    state_name: str
-
-    def __init__(self, state_id: UUID, state_name: str):
-        self.state_id = state_id
-        self.state_name = state_name
-
-    @classmethod
-    def from_json(cls, json):
-        obj = cls(json["state_id"], json["state_name"])
-        return obj
-
-
-class District:
-    district_id: int
-    district_name: str
-
-    def __init__(self, district_id: UUID, district_name: str):
-        self.district_id = district_id
-        self.district_name = district_name
-
-    @classmethod
-    def from_json(cls, json):
-        obj = cls(json["district_id"], json["district_name"])
-        return obj

@@ -4,7 +4,6 @@ from celery.schedules import crontab
 from constance import config
 
 from subscribers.models import Subscriber
-from subscribers.utils import check_and_notify_subscriber
 from vaccination_slot_notifier import celery_app
 
 
@@ -16,7 +15,7 @@ def check_available_slots():
         - timedelta(seconds=config.MAIL_COOLDOWN_SECONDS),
     )
     for subscriber in subscriber_list:
-        subscriber.check_and_notify_subscriber()
+        subscriber.check_and_notify_slots()
 
 
 @celery_app.task
