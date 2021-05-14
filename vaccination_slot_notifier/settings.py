@@ -181,7 +181,6 @@ PHONENUMBER_DEFAULT_REGION = "IN"
 # Constance Settings
 CONSTANCE_CONFIG = {
     "SMS_SERVICE_ACTIVE": (False, "Whether SMS service is active or not"),
-    "SNIFFING_INTERVAL_SECONDS": (300, "Seconds between each sniffer iteration"),
     "MAIL_COOLDOWN_SECONDS": (1800, "Seconds before a new mail is sent to a user."),
     "MAX_DAILY_SMS_COUNT": (5, "Maximum number of sms in a day to a user."),
 }
