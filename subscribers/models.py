@@ -33,7 +33,7 @@ class Subscriber(models.Model):
     age_limit = models.IntegerField(
         "age limit",
         choices=AGE_CATEGORY,
-        default=AGE_CATEGORY[0],
+        default=AGE_CATEGORY[0][0],
         null=False,
         blank=False,
     )
@@ -52,7 +52,9 @@ class Subscriber(models.Model):
     )
 
     def __str__(self):
-        return self.email or str(self.phone_number) or self.id
+        if self.phone_number:
+            return str(self.phone_number)
+        return self.email
 
     @staticmethod
     def _filter_centers(centers, age_limit):
@@ -96,7 +98,7 @@ class Subscriber(models.Model):
         if not centers:
             return
 
-        filtered_slots = _filter_centers(centers, self.age_limit)
+        filtered_slots = self._filter_centers(centers, self.age_limit)
         if filtered_slots:
             if self.email:
                 message = render_to_string(
@@ -116,12 +118,12 @@ class Subscriber(models.Model):
                 and self.phone_number
                 and self.daily_sms_count < config.MAX_DAILY_SMS_COUNT
             ):
-                self.daily_sms_count += 1
+                self.daily_sms_count = models.F("daily_sms_count") + 1
 
-                for message in _create_message_strings(filtered_slots):
+                for message in self._create_message_strings(filtered_slots):
                     send_whatsapp.delay(self.phone_number.as_e164, message)
 
-            self.save()
+        self.save()
 
     def send_welcome_mail(self):
         subject = "Welcome to Vaccination Slot Notifications for CoWin"

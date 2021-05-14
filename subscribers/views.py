@@ -6,7 +6,6 @@ from django.views.generic.edit import FormView
 
 from subscribers.forms import SubscriberForm
 from subscribers.models import Subscriber
-from subscribers.utils import check_and_notify_subscriber, welcome_new_subscriber
 
 
 class SubscriberCreateView(SuccessMessageMixin, FormView):

@@ -45,13 +45,3 @@ def get_centers_by_district_id(district_id):
 
     if res.status_code == 200:
         return parse_centers(res.json()["centers"])
-
-
-def get_states():
-    res = requests.get(settings.STATES_ENDPOINT)
-    return parse_centers(res.json()["states"])
-
-
-def get_districts(state_id):
-    res = requests.get(settings.DISTRICTS_ENDPOINT % state_id)
-    return parse_centers(res.json()["districts"])
