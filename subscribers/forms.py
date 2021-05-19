@@ -28,7 +28,9 @@ class SubscriberForm(ModelForm):
         ]
         widgets = {
             "email": forms.TextInput(attrs={"placeholder": "you@example.com"}),
-            "phone_number": forms.TextInput(attrs={"placeholder": "10-digit number (Optional)"}),
+            "phone_number": forms.TextInput(
+                attrs={"placeholder": "10-digit number (Optional)"}
+            ),
             "pincode": forms.TextInput(attrs={"placeholder": "110006"}),
             "district_id": forms.Select,
         }
@@ -38,25 +40,35 @@ class SubscriberForm(ModelForm):
         error = {}
 
         if not cleaned_data.get("email") and not cleaned_data.get("phone_number"):
-            error.update({
-                "email": "Please enter either email or phone number.",
-                "phone_number": "Please enter either email or phone number.",
-            })
+            error.update(
+                {
+                    "email": "Please enter either email or phone number.",
+                    "phone_number": "Please enter either email or phone number.",
+                }
+            )
 
-        if cleaned_data.get("search_type") == SEARCH_TYPE_CHOICES[0][0] and not cleaned_data.get("pincode"):
-            error.update({
-                "pincode": "Please enter your pincode",
-            })
+        if cleaned_data.get("search_type") == SEARCH_TYPE_CHOICES[0][
+            0
+        ] and not cleaned_data.get("pincode"):
+            error.update(
+                {
+                    "pincode": "Please enter your pincode",
+                }
+            )
 
         if cleaned_data.get("search_type") == SEARCH_TYPE_CHOICES[1][0]:
             if not cleaned_data.get("state"):
-                error.update({
-                    "state": "Please select your State",
-                })
+                error.update(
+                    {
+                        "state": "Please select your State",
+                    }
+                )
             if not cleaned_data.get("district_id"):
-                error.update({
-                    "district_id": "Please select your district",
-                })
+                error.update(
+                    {
+                        "district_id": "Please select your district",
+                    }
+                )
 
         if cleaned_data.get("email") or cleaned_data.get("phone_number"):
             email = cleaned_data.get("email")
@@ -64,29 +76,45 @@ class SubscriberForm(ModelForm):
 
             if cleaned_data.get("pincode"):
                 if email:
-                    if Subscriber.objects.filter(email=email, pincode=cleaned_data.get("pincode")).exists():
-                        error.update({
-                            "pincode": "You have already subscribed at this pincode.",
-                        })
+                    if Subscriber.objects.filter(
+                        email=email, pincode=cleaned_data.get("pincode")
+                    ).exists():
+                        error.update(
+                            {
+                                "pincode": "You have already subscribed at this pincode.",
+                            }
+                        )
                 elif phone_number:
-                    if Subscriber.objects.filter(phone_number=phone_number, pincode=cleaned_data.get("pincode")).exists():
-                        error.update({
-                            "pincode": "You have already subscribed at this pincode.",
-                        })
+                    if Subscriber.objects.filter(
+                        phone_number=phone_number, pincode=cleaned_data.get("pincode")
+                    ).exists():
+                        error.update(
+                            {
+                                "pincode": "You have already subscribed at this pincode.",
+                            }
+                        )
 
             if cleaned_data.get("district_id"):
                 if email:
-                    if Subscriber.objects.filter(email=email, district_id=cleaned_data.get("district_id")).exists():
-                        error.update({
-                            "district_id": "You have already subscribed at this district.",
-                        })
+                    if Subscriber.objects.filter(
+                        email=email, district_id=cleaned_data.get("district_id")
+                    ).exists():
+                        error.update(
+                            {
+                                "district_id": "You have already subscribed at this district.",
+                            }
+                        )
                 elif phone_number:
-                    if Subscriber.objects.filter(phone_number=phone_number, district_id=cleaned_data.get("district_id")).exists():
-                        error.update({
-                            "pincode": "You have already subscribed at this district.",
-                        })
-                
-        
+                    if Subscriber.objects.filter(
+                        phone_number=phone_number,
+                        district_id=cleaned_data.get("district_id"),
+                    ).exists():
+                        error.update(
+                            {
+                                "district_id": "You have already subscribed at this district.",
+                            }
+                        )
+
         if cleaned_data.get("pincode") and cleaned_data.get("district_id"):
             cleaned_data.pop("district_id")
 

@@ -21,7 +21,10 @@ class TestSubscriberModel(TestCase):
             phone_number="9999999999", district_id=1
         )
         self.subscriber3 = Subscriber.objects.create(
-            email="foo@bar.com", phone_number="9999999999", pincode=222222, district_id=2
+            email="foo@bar.com",
+            phone_number="9999999999",
+            pincode=222222,
+            district_id=2,
         )
 
         self.test_centers = [
