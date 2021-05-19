@@ -54,7 +54,11 @@ class Subscriber(models.Model):
     )
 
     def __str__(self):
-        return f"{self.email} {f'#{self.phone_number}' if self.phone_number is not None else ''}"
+        s = []
+        if self.email:        s.append(str(self.email))
+        if self.phone_number: s.append(str(self.phone_number))
+
+        return " ".join(s)
 
     @staticmethod
     def _filter_centers(centers, age_limit):

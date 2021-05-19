@@ -20,6 +20,9 @@ class TestSubscriberModel(TestCase):
         self.subscriber2 = Subscriber.objects.create(
             phone_number="9999999999", district_id=1
         )
+        self.subscriber3 = Subscriber.objects.create(
+            email="foo@bar.com", phone_number="9999999999", pincode=222222, district_id=2
+        )
 
         self.test_centers = [
             {
@@ -149,6 +152,7 @@ class TestSubscriberModel(TestCase):
     def test_str_method(self):
         self.assertEqual(str(self.subscriber1), "foo@bar.com")
         self.assertEqual(str(self.subscriber2), "+919999999999")
+        self.assertEqual(str(self.subscriber3), "foo@bar.com +919999999999")
 
     def test_filter_centers(self):
         filter_18 = Subscriber._filter_centers(self.parsed_test_centers, 18)
