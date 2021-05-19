@@ -1,12 +1,12 @@
 from http import HTTPStatus
 
 from django.contrib.messages import get_messages
-from django.test import SimpleTestCase
+from django.test import TransactionTestCase
 
 from subscribers.forms import SubscriberForm
 
 
-class TestSubscriberForm(SimpleTestCase):
+class TestSubscriberForm(TransactionTestCase):
     def test_valid_form_data(self):
         valid_form_data = [
             {
