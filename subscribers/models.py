@@ -14,8 +14,8 @@ from sniffer.models import Slots
 from subscribers.utils import send_mail, send_whatsapp
 
 AGE_CATEGORY = [
-    (18, "18+"),
-    (45, "45+"),
+    (18, "18 to 44"),
+    (45, "45 and older"),
 ]
 
 
@@ -28,10 +28,12 @@ class Subscriber(models.Model):
         validators=[MinValueValidator(100000), MaxValueValidator(999999)],
         blank=True,
         null=True,
+        help_text = "Don't know your pincode? Use 'By District'"
     )
-    district_id = models.IntegerField("district", blank=True, null=True)
+    district_id = models.IntegerField("district", blank=True, null=True, help_text = "Districts are based on voting districts")
     age_limit = models.IntegerField(
         "age limit",
+        help_text = "Select your age category",
         choices=AGE_CATEGORY,
         default=AGE_CATEGORY[0][0],
         null=False,
@@ -52,9 +54,7 @@ class Subscriber(models.Model):
     )
 
     def __str__(self):
-        if self.phone_number:
-            return str(self.phone_number)
-        return self.email
+        return f"{self.email} {f'#{self.phone_number}' if self.phone_number is not None else ''}"
 
     @staticmethod
     def _filter_centers(centers, age_limit):
