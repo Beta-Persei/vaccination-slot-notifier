@@ -57,6 +57,7 @@ class Session:
         min_age_limit: int,
         vaccine: Vaccine,
         slots: List[str],
+        **kwargs
     ):
         self.session_id = session_id
         self.date = datetime.strptime(date, "%d-%m-%Y")
