@@ -130,7 +130,7 @@ a {
   margin: auto;
 
   width: 20em;
-  height: 40em;
+  height: 42em;
 
   padding: 1em 2em;
   padding-bottom: 0;
@@ -180,6 +180,14 @@ a {
   bottom: -1em;
   background-color: black;
   z-index: 1;
+}
+
+#search-form form .form-group {
+  margin-bottom: 0.5rem;
+}
+
+#search-form form .form-field:nth-of-type(2) .form-group {
+  margin-top: 0.5rem;
 }
 
 /* Search type selectors */
