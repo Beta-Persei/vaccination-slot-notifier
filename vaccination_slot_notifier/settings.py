@@ -152,9 +152,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = os.environ.get("EMAIL_ID")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASSWORD")
 
-# Admins
-ADMINS = os.environ.get("ADMINS", "").split(" ")
-
 # Celery
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
 
