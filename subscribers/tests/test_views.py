@@ -49,7 +49,7 @@ class TestSubscriberViews(TestCase):
         self.assertEqual(len(messages), 1)
         self.assertEqual(
             str(messages[0]),
-            "You will be notified via email whenever a vaccinaton slot is available!",
+            "You will be notified when a vaccinaton slot is available!",
         )
 
     def test_unsubscriber_view_get(self):

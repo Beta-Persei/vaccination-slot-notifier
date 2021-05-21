@@ -13,7 +13,7 @@ class SubscriberCreateView(SuccessMessageMixin, FormView):
 
     template_name = "subscribers/index.html"
     success_message = (
-        "You will be notified via email whenever a vaccinaton slot is available!"
+        "You will be notified when a vaccinaton slot is available!"
     )
     success_url = "/"
 
@@ -38,7 +38,7 @@ def unsubscribe_view(request, pk):
         messages.add_message(
             request,
             messages.SUCCESS,
-            "You have unsubscribed from slot availability updates.",
+            "You have unsubscribed from vaccinaton slot updates.",
         )
     except ObjectDoesNotExist:
         messages.add_message(request, messages.WARNING, "Oops! Something went wrong.")
