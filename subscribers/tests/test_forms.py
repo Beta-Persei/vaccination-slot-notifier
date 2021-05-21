@@ -1,9 +1,11 @@
 from http import HTTPStatus
 
 from django.contrib.messages import get_messages
+from django.core.exceptions import ValidationError
 from django.test import TestCase
 
 from subscribers.forms import SubscriberForm
+from subscribers.models import Subscriber
 
 
 class TestSubscriberForm(TestCase):
@@ -121,3 +123,44 @@ class TestSubscriberForm(TestCase):
             with self.subTest(data):
                 form = SubscriberForm(data=data)
                 self.assertFalse(form.is_valid())
+
+    def test_duplicate_email_pincode_active(self):
+        data = {
+            "email": "foo@bar.com",
+            "phone_number": "+919999999999",
+            "age_limit": 18,
+            "pincode": 111111,
+            "state": "",
+            "district_id": "",
+            "search_type": "pincode",
+        }
+        form = SubscriberForm(data=data)
+        self.assertTrue(form.is_valid())
+        form.save()
+
+        form = SubscriberForm(data=data)
+        self.assertFalse(form.is_valid())
+        self.assertNotEqual(form.errors, {})
+
+    def test_duplicate_email_pincode_inactive(self):
+        data = {
+            "email": "foo@bar.com",
+            "phone_number": "+919999999999",
+            "age_limit": 18,
+            "pincode": 111111,
+            "state": "",
+            "district_id": "",
+            "search_type": "pincode",
+        }
+        form = SubscriberForm(data=data)
+        self.assertTrue(form.is_valid())
+        obj = form.save()
+
+        obj.active = False
+        obj.save()
+
+        form = SubscriberForm(data=data)
+        self.assertTrue(form.is_valid())
+        obj = form.save()
+
+        self.assertTrue(obj.active)
