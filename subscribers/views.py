@@ -12,9 +12,7 @@ class SubscriberCreateView(SuccessMessageMixin, FormView):
     form_class = SubscriberForm
 
     template_name = "subscribers/index.html"
-    success_message = (
-        "You will be notified when a vaccinaton slot is available!"
-    )
+    success_message = "You will be notified when a vaccinaton slot is available!"
     success_url = "/"
 
     def form_valid(self, form):
