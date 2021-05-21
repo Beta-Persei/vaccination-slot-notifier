@@ -14,7 +14,7 @@ from sniffer.models import Slots
 from subscribers.utils import send_mail, send_whatsapp
 
 AGE_CATEGORY = [
-    (18, "18 to 44"),
+    (18, "18 and older"),
     (45, "45 and older"),
 ]
 
