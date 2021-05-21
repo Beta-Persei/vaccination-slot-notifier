@@ -77,7 +77,7 @@ class SubscriberForm(ModelForm):
             if cleaned_data.get("pincode"):
                 if email:
                     if Subscriber.objects.filter(
-                        email=email, pincode=cleaned_data.get("pincode")
+                        email=email, pincode=cleaned_data.get("pincode"), active=True
                     ).exists():
                         error.update(
                             {
@@ -86,7 +86,9 @@ class SubscriberForm(ModelForm):
                         )
                 elif phone_number:
                     if Subscriber.objects.filter(
-                        phone_number=phone_number, pincode=cleaned_data.get("pincode")
+                        phone_number=phone_number,
+                        pincode=cleaned_data.get("pincode"),
+                        active=True,
                     ).exists():
                         error.update(
                             {
@@ -97,7 +99,9 @@ class SubscriberForm(ModelForm):
             if cleaned_data.get("district_id"):
                 if email:
                     if Subscriber.objects.filter(
-                        email=email, district_id=cleaned_data.get("district_id")
+                        email=email,
+                        district_id=cleaned_data.get("district_id"),
+                        active=True,
                     ).exists():
                         error.update(
                             {
@@ -108,6 +112,7 @@ class SubscriberForm(ModelForm):
                     if Subscriber.objects.filter(
                         phone_number=phone_number,
                         district_id=cleaned_data.get("district_id"),
+                        active=True,
                     ).exists():
                         error.update(
                             {
