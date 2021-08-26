@@ -7,6 +7,7 @@ from uuid import UUID
 class Vaccine(Enum):
     COVISHIELD = "COVISHIELD"
     COVAXIN = "COVAXIN"
+    SPUTNIK = "SPUTNIK V"
 
 
 class Slots:

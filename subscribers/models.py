@@ -120,7 +120,7 @@ class Subscriber(models.Model):
                         "subscriber_id": self.id,
                     },
                 )
-                subject = "Vaccination slot found! | Notification"
+                subject = len(filtered_slots) + " slots found | Vaccination Notification"
                 send_mail.delay(self.email, subject, message)
                 self.last_mail_sent = timezone.now()
 
